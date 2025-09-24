@@ -41,6 +41,9 @@ export default function Login() {
       <p>
         Chưa có tài khoản? <Link to="/register">Đăng ký</Link>
       </p>
+      <p>
+        Tới trang chat <Link to="/chat">chatdt</Link>
+      </p>
     </div>
   );
 }
