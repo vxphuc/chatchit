@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import axios from "axios"; 
 import "./EditProfile.css";
 
 export default function EditProfile() {
@@ -11,11 +12,23 @@ export default function EditProfile() {
 
   // Khi vào trang thì lấy thông tin từ localStorage
   useEffect(() => {
-    const savedUser = JSON.parse(localStorage.getItem("userData"));
-    if (savedUser) {
-      setUser(savedUser);
-    }
+    const fetchUserData = async () => {
+      const savedUser = (localStorage.getItem("tokenjwt"));
+      await axios
+        .get("/api/thong-tin-sau-khi-dang-nhap", {
+          headers: { Authorization: `Bearer ${savedUser}` },
+        })
+        .then((res) => {
+          setUser(res.data);
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    fetchUserData();
   }, []);
+  
 
   // Hàm xử lý khi lưu
   const handleSave = () => {
@@ -62,7 +75,9 @@ export default function EditProfile() {
           </div>
         )}
 
-        <button className="saveinfo" onClick={handleSave}>Lưu thông tin</button>
+        <button className="saveinfo" onClick={handleSave}>
+          Lưu thông tin
+        </button>
       </div>
     </div>
   );
