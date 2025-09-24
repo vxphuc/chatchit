@@ -1,0 +1,40 @@
+.kol-container {
+  max-width: 500px;
+  margin: 50px auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+.kol-container h2 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.kol-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.kol-form label {
+  font-weight: bold;
+}
+
+.kol-form input,
+.kol-form textarea {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.RegisterKol {
+  margin-top: 15px;
+  padding: 10px;
+  background: #10a37f;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
