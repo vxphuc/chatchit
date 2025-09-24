@@ -4,36 +4,54 @@ import axios from "axios";
 
 export default function Register() {
   const [username, setUsername] = useState("");
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
 
+    if (password !== confirmPassword) {
+      alert("Mật khẩu nhập lại không khớp!");
+      return;
+    }
+
     try {
-      await axios.post("http://localhost:5000/register", { username, email, password });
+      await axios.post("/api/dangky", {
+        Username: username,
+        Email: email,
+        PasswordHash: password,
+        FullName: fullName,
+      });
+
       alert("Đăng ký thành công, hãy đăng nhập!");
       navigate("/");
     } catch (err) {
+      console.error(err);
       alert("Có lỗi khi đăng ký!");
     }
+    console.log({ username, fullName, email, password, confirmPassword });
   };
 
   return (
     <div style={{ maxWidth: "400px", margin: "100px auto" }}>
       <h2>Đăng ký</h2>
-      <form onSubmit={handleRegister} style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+      <form
+        onSubmit={handleRegister}
+        style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+      >
         <input
           type="text"
-          placeholder="Tên người dùng"
+          placeholder="Tên đăng nhập"
           onChange={(e) => setUsername(e.target.value)}
           required
         />
         <input
           type="text"
-          placeholder="Tên đăng nhập"
-          onChange={(e) => setUsername(e.target.value)}
+          placeholder="Họ và tên"
+          onChange={(e) => setFullName(e.target.value)}
           required
         />
         <input
@@ -46,6 +64,12 @@ export default function Register() {
           type="password"
           placeholder="Mật khẩu"
           onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        <input
+          type="password"
+          placeholder="Nhập lại mật khẩu"
+          onChange={(e) => setConfirmPassword(e.target.value)}
           required
         />
         <button type="submit">Đăng ký</button>
