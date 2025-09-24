@@ -19,7 +19,7 @@ export default function Register() {
     }
 
     try {
-      await axios.post("/http://chatapi.io.vn/dangky", {
+      await axios.post("/api/dangky", {
         Username: username,
         Email: email,
         PasswordHash: password,

@@ -17,7 +17,7 @@ export default function EditProfile() {
     const fetchUserData = async () => {
       const savedUser = localStorage.getItem("tokenjwt");
       await axios
-        .get("/http://chatapi.io.vn/thong-tin-sau-khi-dang-nhap", {
+        .get("/api/thong-tin-sau-khi-dang-nhap", {
           headers: { Authorization: `Bearer ${savedUser}` },
         })
         .then((res) => {
