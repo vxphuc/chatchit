@@ -4,23 +4,33 @@ import "./EditProfile.css";
 
 export default function EditProfile() {
   const [user, setUser] = useState({
-    name: "",
+    id: "",
+    username: "",
     email: "",
+    name: "",
     phone: "",
-    avatar: "",
+    avatar: ""
   });
 
   // Khi vào trang thì lấy thông tin từ localStorage
   useEffect(() => {
     const fetchUserData = async () => {
-      const savedUser = (localStorage.getItem("tokenjwt"));
+      const savedUser = localStorage.getItem("tokenjwt");
       await axios
-        .get("/api/thong-tin-sau-khi-dang-nhap", {
+        .get("/http://chatapi.io.vn/thong-tin-sau-khi-dang-nhap", {
           headers: { Authorization: `Bearer ${savedUser}` },
         })
         .then((res) => {
           setUser(res.data);
           console.log(res.data);
+          const userData = {
+            id: res.data.id,
+            username: res.data.username,
+            email: res.data.email,
+            name: res.data.fullName,
+            
+          }
+          setUser(userData);
         })
         .catch((err) => {
           console.log(err);
@@ -44,7 +54,7 @@ export default function EditProfile() {
         <label>Tên hiển thị</label>
         <input
           type="text"
-          value={user.name}
+          value={user.name || ""}
           onChange={(e) => setUser({ ...user, name: e.target.value })}
         />
 
