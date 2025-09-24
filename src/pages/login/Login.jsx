@@ -11,7 +11,7 @@ export default function Login() {
     e.preventDefault();
     // Giả lập: nếu có backend thì gọi API, tạm thời chỉ điều hướng
     try {
-      await axios.post("/http://chatapi.io.vn/dangnhap", { Username : Username, Password_hash: Password_hash }
+      await axios.post("http://chatapi.io.vn/dangnhap", { Username : Username, Password_hash: Password_hash }
       ).then((res) => {localStorage.setItem("tokenjwt", res.data);});
       navigate("/chat");
     } catch (err) {
