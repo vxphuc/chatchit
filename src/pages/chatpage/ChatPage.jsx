@@ -2,6 +2,7 @@ import { useState } from "react";
 import Sidebar from "./silebar/Sidebar";
 import ChatWindow from "./chatwindow/ChatWindow";
 import "./ChatPage.css";
+import axios from "axios";
 
 export default function ChatPage() {
   const [chats, setChats] = useState([]);
@@ -13,9 +14,10 @@ export default function ChatPage() {
     setActiveChat(chatId);
   };
 
-  const sendMessage = (input) => {
+  const sendMessage = async (input) => {
     if (!input || activeChat === null) return;
 
+    // Thêm tin nhắn người dùng
     setChats((prev) =>
       prev.map((chat) =>
         chat.id === activeChat
@@ -24,18 +26,32 @@ export default function ChatPage() {
       )
     );
 
-    setTimeout(() => {
+    try {
+      // Gửi request tới API backend
+      const res = await axios.post("https://chatapi.io.vn/chatAI", {
+        Input: input,
+      });
+
+      const botReply = res.data?.response || "Xin lỗi, không nhận được phản hồi.";
+
+      // Thêm phản hồi từ bot
       setChats((prev) =>
         prev.map((chat) =>
           chat.id === activeChat
-            ? {
-                ...chat,
-                messages: [...chat.messages, { role: "bot", content: "Xin chào, tôi là Chat Bot 🤖" }],
-              }
+            ? { ...chat, messages: [...chat.messages, { role: "bot", content: botReply }] }
             : chat
         )
       );
-    }, 500);
+    } catch (error) {
+      console.error("Lỗi khi gọi API:", error);
+      setChats((prev) =>
+        prev.map((chat) =>
+          chat.id === activeChat
+            ? { ...chat, messages: [...chat.messages, { role: "bot", content: "Có lỗi khi gọi API." }] }
+            : chat
+        )
+      );
+    }
   };
 
   const currentChat = chats.find((c) => c.id === activeChat);
