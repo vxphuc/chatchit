@@ -24,9 +24,10 @@ export default function ChatWindow({ currentChat, sendMessage }) {
                   padding: "10px",
                   borderRadius: "10px",
                   margin: "5px",
+                  whiteSpace: "pre-line",
                 }}
               >
-                {msg.content}
+                {msg.content.replace(/\*\*/g, "\n")}
               </p>
             </div>
           ))
