@@ -28,7 +28,7 @@ export default function ChatPage() {
 
     try {
       // Gửi request tới API backend
-      const res = await axios.post("https://chatapi.io.vn/chatAI", {
+      const res = await axios.post("/api/chatAI", {
         Input: input,
       });
 
