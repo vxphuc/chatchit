@@ -27,10 +27,17 @@ export default function ChatPage() {
     );
 
     try {
+      const token = localStorage.getItem("tokenjwt");
+      console.log("Token JWT:", token);
       // Gửi request tới API backend
-      const res = await axios.post("/api/chatAI", {
-        Input: input,
-      });
+      const res = await axios.post("/api/chatAI", 
+        { Input: input },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
       const botReply = res.data?.response || "Xin lỗi, không nhận được phản hồi.";
 
