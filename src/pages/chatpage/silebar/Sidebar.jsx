@@ -38,6 +38,14 @@ export default function Sidebar({ chats, activeChat, setActiveChat, newChat }) {
           🌟 Đăng ký KOL
         </button>
       </div>
+      <div className="user-settings">
+        <button
+          className="user-settings-btn"
+          onClick={() => (window.location.href = "/traning-chat")}
+        >
+          🤖 Đào tạo ChatGPT
+        </button>
+      </div>
     </div>
   );
 }

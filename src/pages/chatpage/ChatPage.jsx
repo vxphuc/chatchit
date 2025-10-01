@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Sidebar from "./silebar/Sidebar";
 import ChatWindow from "./chatwindow/ChatWindow";
 import "./ChatPage.css";
@@ -10,10 +10,15 @@ export default function ChatPage() {
 
   const newChat = () => {
     const chatId = Date.now();
-    setChats([...chats, { id: chatId, title: "Cuộc trò chuyện mới", messages: [] }]);
+    setChats([...chats, { id: chatId, title: "Cuộc trò chuyện mới", messages: [{ role: "bot", content: "Xin chào! Tôi có thể giúp gì cho bạn?" }] }]);
     setActiveChat(chatId);
   };
-
+  // Tạo cuộc trò chuyện mới khi trang được tải lần đầu
+  useEffect(() => {
+    if (chats.length === 0) {
+      newChat();
+    }
+  }, []);
   const sendMessage = async (input) => {
     if (!input || activeChat === null) return;
 
