@@ -20,10 +20,10 @@ export default function Register() {
 
     try {
       await axios.post("/api/dangky", {
-        Username: username,
-        Email: email,
-        PasswordHash: password,
-        FullName: fullName,
+        username: username,
+        email: email,
+        password_hash: password,
+        full_name: fullName,
       });
 
       alert("Đăng ký thành công, hãy đăng nhập!");
