@@ -10,20 +10,27 @@ export default function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/api/dangnhap", { 
-        username: Username, 
-        password_hash: Password_hash 
-      });
-      if (res.data && res.data.tokenjwt) {
-        localStorage.setItem("tokenjwt", res.data.tokenjwt);
-        navigate("/chat");
-      } else {
-        alert("Sai tên đăng nhập hoặc mật khẩu!");
-      }
-    } catch (err) {
-      alert("Sai tên đăng nhập hoặc mật khẩu!");
+      await axios.post("/api/dangnhap", { Username: Username, Password_hash: Password_hash })
+        .then((res) => {
+          if (
+            res.data &&
+            res.data === "userName không chính xác"
+          ) {
+            alert("Sai tên đăng nhập!");
+          }else if(res.data &&
+            res.data === "Mật khẩu không chính xác"){
+              alert("Sai mật khẩu!");
+            }
+           else if (res.data && res.data.tokenjwt !== "userName không chính xác") {
+            localStorage.setItem("tokenjwt", res.data);
+            alert("Đăng nhập thành công!");
+            navigate("/chat");
+          }
+        });
+      } catch (err) {
+      alert("tên đăng nhập hoặc mật khẩu không chính xác!");
     }
-    console.log({ username: Username, password_hash: Password_hash });
+    console.log({ Username, Password_hash });
   };
 
   return (
