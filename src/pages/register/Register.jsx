@@ -24,7 +24,7 @@ export default function Register() {
         email: email,
         password_hash: password,
         full_name: fullName,
-        role_id: 4,
+        role_id: 5,
       });
 
       alert("Đăng ký thành công, hãy đăng nhập!");
