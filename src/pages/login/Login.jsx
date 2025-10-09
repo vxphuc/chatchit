@@ -9,15 +9,21 @@ export default function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    // Giả lập: nếu có backend thì gọi API, tạm thời chỉ điều hướng
     try {
-      await axios.post("/api/dangnhap", { Username : Username, Password_hash: Password_hash }
-      ).then((res) => {localStorage.setItem("tokenjwt", res.data);});
-      navigate("/chat");
+      const res = await axios.post("/api/dangnhap", { 
+        username: Username, 
+        password_hash: Password_hash 
+      });
+      if (res.data && res.data.tokenjwt) {
+        localStorage.setItem("tokenjwt", res.data.tokenjwt);
+        navigate("/chat");
+      } else {
+        alert("Sai tên đăng nhập hoặc mật khẩu!");
+      }
     } catch (err) {
-      alert("Sai email hoặc mật khẩu!");
+      alert("Sai tên đăng nhập hoặc mật khẩu!");
     }
-    console.log({ Username, Password_hash });
+    console.log({ username: Username, password_hash: Password_hash });
   };
 
   return (
