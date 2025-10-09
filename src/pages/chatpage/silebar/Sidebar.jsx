@@ -30,22 +30,16 @@ export default function Sidebar({ chats, activeChat, setActiveChat, newChat }) {
           ⚙️ Chỉnh sửa thông tin
         </button>
       </div>
-      {/* <div className="user-settings">
-        <button
-          className="user-settings-btn"
-          onClick={() => (window.location.href = "/kol-register")}
-        >
-          🌟 Đăng ký KOL
-        </button>
-      </div>
+      
       <div className="user-settings">
         <button
           className="user-settings-btn"
-          onClick={() => (window.location.href = "/traning-chat")}
+          onClick={() => (window.location.href = "/Discount")}
         >
-          🤖 Đào tạo ChatGPT
+          🌟 Thêm mã giảm giá
         </button>
-      </div> */}
+      </div>
+    
     </div>
   );
 }

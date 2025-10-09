@@ -1,6 +1,9 @@
+// Login.jsx
+
 import { useState } from "react";
-import { data, Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { fetchUserInfo } from "../../compoment/auth"; // ✅ 1. Import hàm fetchUserInfo
 
 export default function Login() {
   const [Username, setUsername] = useState("");
@@ -10,28 +13,33 @@ export default function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("/api/dangnhap", { Username: Username, Password_hash: Password_hash })
-        .then((res) => {
-          if (
-            res.data &&
-            res.data === "userName không chính xác"
-          ) {
-            alert("Sai tên đăng nhập!");
-          }else if(res.data &&
-            res.data === "Mật khẩu không chính xác"){
-              alert("Sai mật khẩu!");
-            }
-           else if (res.data && res.data.tokenjwt !== "userName không chính xác") {
-            localStorage.setItem("tokenjwt", res.data);
-            alert("Đăng nhập thành công!");
-            navigate("/chat");
-          }
-        });
-      } catch (err) {
-      alert("tên đăng nhập hoặc mật khẩu không chính xác!");
+      const res = await axios.post("/api/dangnhap", {
+        Username: Username,
+        Password_hash: Password_hash,
+      });
+
+      if (res.data && res.data === "userName không chính xác") {
+        alert("Sai tên đăng nhập!");
+      } else if (res.data && res.data === "Mật khẩu không chính xác") {
+        alert("Sai mật khẩu!");
+      } else if (res.data && res.data.tokenjwt !== "userName không chính xác"&& res.data.tokenjwt !== "Mật khẩu không chính xác") { // Sửa điều kiện kiểm tra token
+        // Lưu token
+        localStorage.setItem("tokenjwt", res.data);
+
+        // ✅ 2. Lấy và lưu thông tin người dùng ngay sau khi đăng nhập
+        await fetchUserInfo(); 
+
+        alert("Đăng nhập thành công!");
+        navigate("/chat"); // Hoặc trang tạo mã giảm giá
+      } else {
+        alert("Tên đăng nhập hoặc mật khẩu không chính xác!");
+      }
+    } catch (err) {
+      alert("Đã xảy ra lỗi khi đăng nhập!");
+      console.error(err);
     }
-    console.log({ Username, Password_hash });
   };
+
 
   return (
     <div style={{ maxWidth: "400px", margin: "100px auto" }}>
