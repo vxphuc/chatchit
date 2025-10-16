@@ -5,6 +5,9 @@ import ChatPage from "./pages/chatpage/ChatPage";
 import EditProfile from "./pages/editprofile/EditProfile";
 import Discount from "./pages/discount/CreateDiscount";
 import TraningChat from "./pages/TraningChat";
+import GenerateCode from "./pages/GenerateCode/GenerateCode";
+import DiscountDetails from "./pages/DiscountDetails/DiscountDetails";
+import JoinedEvents from "./pages/JoinedEvents/JoinedEvents";
 export default function App() {
   return (
     <BrowserRouter>
@@ -15,6 +18,9 @@ export default function App() {
         <Route path="/profile" element={<EditProfile />} />
         <Route path="/Discount" element={<Discount />} />
         <Route path="/traning-chat" element={<TraningChat />} />
+        <Route path="/generate-code" element={<GenerateCode />} />
+        <Route path="/discount-details/:id" element={<DiscountDetails />} />
+        <Route path="/JoinedEvents" element={<JoinedEvents />} />
       </Routes>
     </BrowserRouter>
   );

@@ -36,10 +36,17 @@ export default function Sidebar({ chats, activeChat, setActiveChat, newChat }) {
           className="user-settings-btn"
           onClick={() => (window.location.href = "/Discount")}
         >
-          🌟 Thêm mã giảm giá
+          🌟 Xem chương trình khuyến mãi
         </button>
       </div>
-    
+      <div className="user-settings">
+        <button
+          className="user-settings-btn"
+          onClick={() => (window.location.href = "/JoinedEvents")}
+        >
+          ✨ danh sách mã giảm giá
+        </button>
+      </div>
     </div>
   );
 }

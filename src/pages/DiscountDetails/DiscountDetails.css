@@ -1,0 +1,44 @@
+.details-container {
+  max-width: 600px;
+  margin: 60px auto;
+  padding: 20px;
+}
+
+.details-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  color: #333;
+}
+
+.details-card h2 {
+  border-bottom: 2px solid #eee;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+.detail-item {
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+
+.detail-item strong {
+  margin-right: 8px;
+  color: #10a37f;
+}
+
+.back-btn {
+  margin-top: 20px;
+  padding: 10px 18px;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.back-btn:hover {
+  background-color: #5a6268;
+}

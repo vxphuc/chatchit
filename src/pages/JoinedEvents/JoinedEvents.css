@@ -1,0 +1,74 @@
+.joined-events-container {
+  max-width: 900px; /* Tăng chiều rộng để vừa bảng */
+  margin: 60px auto;
+  padding: 25px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.events-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.events-table th,
+.events-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+  color: #333; /* Đảm bảo màu chữ dễ đọc trên nền trắng */
+}
+
+.events-table thead {
+  background-color: #10a37f;
+  color: white;
+  font-weight: 600;
+}
+
+.events-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.events-table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+.message {
+  text-align: center;
+  margin-top: 15px;
+  font-weight: 600;
+  color: #555;
+}
+.message {
+  text-align: center;
+  margin-top: 15px;
+  font-weight: 600;
+  color: #555;
+}
+
+/* 4. Thêm CSS mới cho nút copy */
+.code-cell {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px; /* Khoảng cách giữa mã và nút */
+}
+
+.copy-btn {
+  padding: 4px 10px;
+  font-size: 0.85em;
+  background-color: #e9ecef;
+  border: 1px solid #ced4da;
+  color: #495057;
+  border-radius: 4px;
+  cursor: pointer;
+  min-width: 85px; /* Giữ chiều rộng nút ổn định */
+  text-align: center;
+  transition: background-color 0.2s;
+}
+
+.copy-btn:hover {
+  background-color: #dee2e6;
+}
