@@ -1,5 +1,5 @@
-.create-discount-container {
-  max-width: 480px;
+.discount-list-container {
+  max-width: 800px; /* Tăng chiều rộng để vừa bảng */
   margin: 60px auto;
   padding: 25px;
   background: #fff;
@@ -7,35 +7,36 @@
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
-.discount-form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+.discount-table {
+  width: 100%;
+  border-collapse: collapse; /* Gộp đường viền của các ô */
+  margin-top: 20px;
 }
 
-.discount-form input {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-}
-
-.discount-form button {
-  background-color: #10a37f;
-  color: white;
-  border: none;
+.discount-table th,
+.discount-table td {
+  border: 1px solid #ddd;
   padding: 12px;
-  border-radius: 6px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.3s ease;
+  text-align: left;
 }
 
-.discount-form button:hover {
-  background-color: #0d8b6e;
+.discount-table thead {
+  background-color: #10a37f; /* Màu xanh lá cây từ nút cũ */
+  color: white;
+  font-weight: 600;
+}
+
+.discount-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9; /* Tạo hiệu ứng vằn cho các hàng */
+}
+
+.discount-table tbody tr:hover {
+  background-color: #f1f1f1; /* Highlight khi di chuột qua */
 }
 
 .message {
   text-align: center;
   margin-top: 15px;
   font-weight: 600;
+  color: #555;
 }

@@ -1,0 +1,85 @@
+.generate-code-container {
+  max-width: 500px;
+  margin: 60px auto;
+  padding: 30px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.generate-code-container h2 {
+  margin-bottom: 25px;
+  color: #333;
+}
+
+.generate-code-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.generate-code-container label {
+  font-weight: 600;
+  color: #555;
+  text-align: left;
+}
+
+.generate-code-container select {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  background-color: #f9f9f9;
+}
+
+.generate-code-container select:disabled {
+  background-color: #e9ecef;
+  cursor: not-allowed;
+}
+
+.generate-code-container button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #10a37f;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.generate-code-container button:hover:not(:disabled) {
+  background-color: #0d8a6a;
+}
+
+.generate-code-container button:disabled {
+  background-color: #a5d8cb;
+  cursor: not-allowed;
+}
+
+.message {
+  margin-top: 15px;
+  font-weight: 600;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+/* Kiểu chữ cho thông báo thành công hoặc lỗi */
+.message:empty {
+  display: none;
+}
+.message:not(:empty) {
+  border: 1px solid;
+}
+.message[class*="✅"] { /* Nếu có icon thành công */
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+.message[class*="❌"], .message[class*="⚠️"] { /* Nếu có icon lỗi */
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
