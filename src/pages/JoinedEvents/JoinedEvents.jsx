@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import "./JoinedEvents.css";
 import { getToken, getUserInfo } from "../../compoment/auth";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function JoinedEvents() {
     const [events, setEvents] = useState([]);
@@ -10,7 +11,7 @@ export default function JoinedEvents() {
     
     // 1. Thêm state mới để quản lý trạng thái "đã sao chép"
     const [copiedCode, setCopiedCode] = useState('');
-
+    const navigate = useNavigate();
     const token = getToken();
     const user = getUserInfo();
     const kol_id = user?._id;
@@ -94,6 +95,9 @@ export default function JoinedEvents() {
                         </tr>
                     ))}
                 </tbody>
+                <button onClick={() => navigate(-1)} className="back-btn">
+                    ⬅️ Quay lại danh sách
+                </button>
             </table>
         </div>
     );

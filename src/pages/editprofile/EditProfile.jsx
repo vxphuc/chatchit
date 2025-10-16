@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios"; 
 import "./EditProfile.css";
-
+import { useNavigate } from "react-router-dom";
 export default function EditProfile() {
   const [user, setUser] = useState({
     id: "",
@@ -11,7 +11,7 @@ export default function EditProfile() {
     phone: "",
     avatar: ""
   });
-
+  const navigate = useNavigate();
   // Khi vào trang thì lấy thông tin từ localStorage
   useEffect(() => {
     const fetchUserData = async () => {
@@ -84,11 +84,14 @@ export default function EditProfile() {
             <img src={user.avatar} alt="Avatar" />
           </div>
         )}
-
+        
         <button className="saveinfo" onClick={handleSave}>
           Lưu thông tin
         </button>
       </div>
+      <button onClick={() => navigate(-1)} className="back-btn">
+                    ⬅️ Quay lại
+                </button>
     </div>
   );
 }

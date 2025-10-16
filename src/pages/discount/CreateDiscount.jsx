@@ -91,6 +91,9 @@ export default function DiscountEventList() {
           ))}
         </tbody>
       </table>
+      <button onClick={() => navigate(-1)} className="back-btn">
+                    ⬅️ Quay lại
+        </button>
     </div>
   );
 }
