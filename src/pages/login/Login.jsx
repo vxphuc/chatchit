@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { fetchUserInfo } from "../../compoment/auth"; // ✅ 1. Import hàm fetchUserInfo
-
+import "./Login.css";
 export default function Login() {
   const [Username, setUsername] = useState("");
   const [Password_hash, setPassword] = useState("");
@@ -42,9 +42,9 @@ export default function Login() {
 
 
   return (
-    <div style={{ maxWidth: "400px", margin: "100px auto" }}>
+    <div className="login-container">
       <h2>Đăng nhập</h2>
-      <form onSubmit={handleLogin} style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+      <form onSubmit={handleLogin} className="login-form">
         <input
           placeholder="username"
           onChange={(e) => setUsername(e.target.value)}

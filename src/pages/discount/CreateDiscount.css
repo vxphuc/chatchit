@@ -1,5 +1,5 @@
 .discount-list-container {
-  max-width: 800px; /* Tăng chiều rộng để vừa bảng */
+  width: 80%; /* Tăng chiều rộng để vừa bảng */
   margin: 60px auto;
   padding: 25px;
   background: #fff;
