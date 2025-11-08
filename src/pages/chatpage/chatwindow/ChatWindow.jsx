@@ -39,12 +39,12 @@ export default function ChatWindow({ currentChat, sendMessage }) {
       {currentChat && (
         <form onSubmit={handleSubmit} className="input-area">
           <input
-            style={{ flex: 1, padding: "10px" }}
+            className="btn-mess"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Nhập tin nhắn..."
           />
-          <button type="submit" style={{ marginLeft: "10px" }}>
+          <button type="submit" className="sub-mess" style={{ marginLeft: "10px" }}>
             Gửi
           </button>
         </form>
