@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { fetchUserInfo } from "../../compoment/auth"; // ✅ 1. Import hàm fetchUserInfo
-import "./Login.css";
+import "./login.css";
 export default function Login() {
   const [Username, setUsername] = useState("");
   const [Password_hash, setPassword] = useState("");
