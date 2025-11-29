@@ -1,10 +1,10 @@
-// Login.jsx
 
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { fetchUserInfo } from "../../compoment/auth"; // ✅ 1. Import hàm fetchUserInfo
+import { fetchUserInfo } from "../../compoment/auth";
 import "./login.css";
+import img from "../../assets/z7266663808303_8081cbd573033dbbca3ae58fea68fc5f.jpg";
 export default function Login() {
   const [Username, setUsername] = useState("");
   const [Password_hash, setPassword] = useState("");
@@ -42,11 +42,12 @@ export default function Login() {
 
 
   return (
+    <div className="login-main">
     <div className="login-container">
       <h2>Đăng nhập</h2>
       <form onSubmit={handleLogin} className="login-form">
         <input
-          placeholder="username"
+          placeholder="Tên đăng nhập"
           onChange={(e) => setUsername(e.target.value)}
           required
         />
@@ -61,9 +62,7 @@ export default function Login() {
       <p>
         Chưa có tài khoản? <Link to="/register">Đăng ký</Link>
       </p>
-      <p>
-        Tới trang chat <Link to="/chat">chatdt</Link>
-      </p>
+    </div>
     </div>
   );
 }

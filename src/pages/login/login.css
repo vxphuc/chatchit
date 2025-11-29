@@ -1,8 +1,13 @@
-/* Login.css */
-
-/* Container chính của form đăng nhập */
+.login-main{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    background-image: url("../../assets/z7266663808303_8081cbd573033dbbca3ae58fea68fc5f.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 .login-container {
-    max-width: 400px;
+    width: 400px;
     margin: 100px auto;
     padding: 20px;
     border: 1px solid #ccc;
@@ -10,6 +15,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background-color: #f9f9f9;
     text-align: center;
+    height: 350px;
 }
 
 /* Tiêu đề */
@@ -37,7 +43,7 @@
 /* Nút Submit */
 .login-form button {
     padding: 12px;
-    background-color: #007bff;
+    background-color: #28a745;
     color: white;
     border: none;
     border-radius: 4px;
@@ -47,7 +53,7 @@
 }
 
 .login-form button:hover {
-    background-color: #0056b3;
+    background-color: #1e7e34;
 }
 
 /* Liên kết (Link) */
@@ -58,7 +64,10 @@
 
 .login-container a {
     color: #007bff;
+    font-size: 1rem;
     text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s;
 }
 
 .login-container a:hover {

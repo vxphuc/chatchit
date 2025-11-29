@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import "./Register.css";
 
 export default function Register() {
   const [username, setUsername] = useState("");
@@ -37,11 +38,12 @@ export default function Register() {
   };
 
   return (
-    <div style={{ maxWidth: "400px", margin: "100px auto" }}>
+    <div className="register-main">
+    <div className="register-container">
       <h2>Đăng ký</h2>
       <form
         onSubmit={handleRegister}
-        style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+        className="register-form"
       >
         <input
           type="text"
@@ -78,6 +80,7 @@ export default function Register() {
       <p>
         Đã có tài khoản? <Link to="/">Đăng nhập</Link>
       </p>
+    </div>
     </div>
   );
 }
