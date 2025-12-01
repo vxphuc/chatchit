@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { fetchUserInfo } from "../../compoment/auth";
 import "./login.css";
-import img from "../../assets/z7266663808303_8081cbd573033dbbca3ae58fea68fc5f.jpg";
 export default function Login() {
   const [Username, setUsername] = useState("");
   const [Password_hash, setPassword] = useState("");
