@@ -29,7 +29,7 @@ export default function SalaryKoc() {
     try {
       // input date (YYYY-MM-DD) -> API cần YYYY/MM/DD
       const formatted = date.replace(/-/g, "/");
-      const url = `https://chatapi.io.vn/doanh-thu-KOC?date=${formatted}`;
+      const url = `/api/doanh-thu-KOC?date=${formatted}`;
       const res = await axios.get(url, {
         headers: { Authorization: `Bearer ${token}` },
       });

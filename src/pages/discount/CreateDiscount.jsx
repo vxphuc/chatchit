@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Sidebar from "../chatpage/silebar/Sidebar";
 import "./CreateDiscount.css";
 import { getToken } from "../../compoment/auth";
 import { useNavigate } from "react-router-dom"; // <-- 1. Import useNavigate
@@ -9,7 +10,15 @@ export default function DiscountEventList() {
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
   const token = getToken();
-  const navigate = useNavigate(); // <-- 2. Khởi tạo hook
+  const navigate = useNavigate();
+  
+  const [chats, setChats] = useState([]);
+  const [activeChat, setActiveChat] = useState(null);
+  const newChat = () => {
+    const chatId = Date.now();
+    setChats((prev) => [...prev, { id: chatId, title: "Cuộc trò chuyện mới", messages: [{ role: "bot", content: "Xin chào! Tôi có thể giúp gì cho bạn?" }] }]);
+    setActiveChat(chatId);
+  };
 
   // ... (phần useEffect không thay đổi)
   useEffect(() => {
@@ -52,6 +61,12 @@ export default function DiscountEventList() {
 
   return (
     <div className="discount-list-container">
+      <Sidebar
+              chats={chats}
+              activeChat={activeChat}
+              setActiveChat={setActiveChat}
+              newChat={newChat}
+            />
       <h2>📜 Danh Sách Sự Kiện Giảm Giá</h2>
       <table className="discount-table">
         <thead>
