@@ -8,6 +8,7 @@ import TraningChat from "./pages/TraningChat";
 import GenerateCode from "./pages/GenerateCode/GenerateCode";
 import DiscountDetails from "./pages/DiscountDetails/DiscountDetails";
 import JoinedEvents from "./pages/JoinedEvents/JoinedEvents";
+import SalaryKoc from "./pages/SalaryKOC/SalaryKoc";
 export default function App() {
   return (
     <BrowserRouter>
@@ -21,6 +22,7 @@ export default function App() {
         <Route path="/generate-code" element={<GenerateCode />} />
         <Route path="/discount-details/:id" element={<DiscountDetails />} />
         <Route path="/JoinedEvents" element={<JoinedEvents />} />
+        <Route path="/salary-koc" element={<SalaryKoc />} />
       </Routes>
     </BrowserRouter>
   );

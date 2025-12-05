@@ -25,12 +25,19 @@ export default function Sidebar({ chats, activeChat, setActiveChat, newChat }) {
       <div className="user-settings">
         <button
           className="user-settings-btn"
+          onClick={() => (window.location.href = "/salary-koc")}
+        >
+          ⚙️ Doanh thu của KOC
+        </button>
+      </div>
+      <div className="user-settings">
+        <button
+          className="user-settings-btn"
           onClick={() => (window.location.href = "/profile")}
         >
           ⚙️ Chỉnh sửa thông tin
         </button>
       </div>
-      
       <div className="user-settings">
         <button
           className="user-settings-btn"
