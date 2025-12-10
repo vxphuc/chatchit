@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Sidebar from "../chatpage/silebar/Sidebar";
 import "./CreateDiscount.css";
 import { getToken } from "../../compoment/auth";
-import { useNavigate } from "react-router-dom"; // <-- 1. Import useNavigate
+import { useNavigate } from "react-router-dom";
+import Sidebar from "../chatpage/silebar/Sidebar";
+import "../chatpage/ChatPage.css"; 
 
 export default function DiscountEventList() {
   const [campaigns, setCampaigns] = useState([]);
@@ -11,16 +12,7 @@ export default function DiscountEventList() {
   const [message, setMessage] = useState("");
   const token = getToken();
   const navigate = useNavigate();
-  
-  const [chats, setChats] = useState([]);
-  const [activeChat, setActiveChat] = useState(null);
-  const newChat = () => {
-    const chatId = Date.now();
-    setChats((prev) => [...prev, { id: chatId, title: "Cuộc trò chuyện mới", messages: [{ role: "bot", content: "Xin chào! Tôi có thể giúp gì cho bạn?" }] }]);
-    setActiveChat(chatId);
-  };
 
-  // ... (phần useEffect không thay đổi)
   useEffect(() => {
     const fetchDiscountEvents = async () => {
       if (!token) {
@@ -51,65 +43,82 @@ export default function DiscountEventList() {
     fetchDiscountEvents();
   }, [token]);
 
-
-  if (loading) {
-    return <div className="discount-list-container"><p>Đang tải...</p></div>;
-  }
-  if (message) {
-    return <div className="discount-list-container"><p className="message" style={{ whiteSpace: 'pre-wrap' }}>{message}</p></div>;
-  }
-
+  const handleNewChatRedirect = () => {
+    navigate("/chat");
+  };
   return (
-    <div className="discount-list-container">
+    <div className="chat-page">
+
       <Sidebar
-              chats={chats}
-              activeChat={activeChat}
-              setActiveChat={setActiveChat}
-              newChat={newChat}
-            />
-      <h2>📜 Danh Sách Sự Kiện Giảm Giá</h2>
-      <table className="discount-table">
-        <thead>
-          <tr>
-            <th>Tên Chiến Dịch</th>
-            <th>Mô Tả</th>
-            <th>Loại Giảm Giá</th>
-            <th>Giá Trị Giảm Giá</th>
-            <th>Bắt Đầu</th>
-            <th>Kết Thúc</th>
-            <th>Hành động</th> {/* <-- 3. Thêm cột mới */}
-          </tr>
-        </thead>
-        <tbody>
-          {campaigns.map((campaign) => (
-            <tr key={campaign.id}>
-              <td>{campaign.name}</td>
-              <td>{campaign.description}</td>
-              <td>{campaign.discount_type === 'percentage' ? 'Phần trăm (%)' : 'Số tiền cố định'}</td>
-              <td>
-                {campaign.discount_type === 'percentage'
-                  ? `${campaign.discount_value}%`
-                  : `${Number(campaign.discount_value).toLocaleString('vi-VN')} VNĐ`}
-              </td>
-              <td>{new Date(campaign.start_date).toLocaleString("vi-VN")}</td>
-              <td>{new Date(campaign.end_date).toLocaleString("vi-VN")}</td>
-              <td>
-                {/* 4. Thêm nút bấm và sự kiện onClick */}
-                <button 
-                  className="details-btn"
-                  onClick={() => navigate(`/discount-details/${campaign.id}`)}
-                >
-                  Xem chi tiết
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <button onClick={() => navigate(-1)} className="back-btn">
-        ⬅️ Quay lại
-      </button>
+        chats={[]}
+        activeChat={null}
+        setActiveChat={() => {}}
+        newChat={handleNewChatRedirect}
+      />
+      <div style={{ flex: 1, overflowY: "auto", backgroundColor: "#f5f5f5", position: "relative" }}>
+        {loading ? (
+          <div className="discount-list-container">
+            <p>Đang tải...</p>
+          </div>
+        ) : message ? (
+          <div className="discount-list-container">
+            <p className="message" style={{ whiteSpace: 'pre-wrap' }}>{message}</p>
+            <button onClick={() => navigate(-1)} className="back-btn" style={{marginTop: '10px'}}>
+              ⬅️ Quay lại
+            </button>
+          </div>
+        ) : (
+          <div className="discount-list-container">
+            <h2>📜 Danh Sách Sự Kiện Giảm Giá</h2>
+            <table className="discount-table">
+              <thead>
+                <tr>
+                  <th>Tên Chiến Dịch</th>
+                  <th>Mô Tả</th>
+                  <th>Loại Giảm Giá</th>
+                  <th>Giá Trị</th>
+                  <th>Hoa Hồng</th>
+                  <th>Bắt Đầu</th>
+                  <th>Kết Thúc</th>
+                  <th>Hành động</th>
+                </tr>
+              </thead>
+              <tbody>
+                {campaigns.map((campaign) => (
+                  <tr key={campaign.id}>
+                    <td>{campaign.name}</td>
+                    <td>{campaign.description}</td>
+                    <td>{campaign.discount_type === 'percentage' ? 'Phần trăm (%)' : 'Số tiền cố định'}</td>
+                    <td>
+                      {campaign.discount_type === 'percentage'
+                        ? `${campaign.discount_value}%`
+                        : `${Number(campaign.discount_value).toLocaleString('vi-VN')} VNĐ`}
+                    </td>
+                    <td>
+                      {campaign.discount_type === 'percentage'
+                        ? `${campaign.commission_value}%`
+                        : `${Number(campaign.commission_value).toLocaleString('vi-VN')} VNĐ`}
+                    </td>
+                    <td>{new Date(campaign.start_date).toLocaleString("vi-VN")}</td>
+                    <td>{new Date(campaign.end_date).toLocaleString("vi-VN")}</td>
+                    <td>
+                      <button 
+                        className="details-btn"
+                        onClick={() => navigate(`/discount-details/${campaign.id}`)}
+                      >
+                        Xem chi tiết
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <button onClick={() => navigate(-1)} className="back-btn">
+              ⬅️ Quay lại
+            </button>
+          </div>
+        )}
+      </div>
     </div>
-    
   );
 }

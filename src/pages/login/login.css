@@ -2,11 +2,11 @@
     width: 100%;
     height: 100vh;
     display: flex;
-    background-image: url("../../assets/z7266663808303_8081cbd573033dbbca3ae58fea68fc5f.jpg");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("../../assets/z7266663808303_8081cbd573033dbbca3ae58fea68fc5f.jpg");
     background-repeat: no-repeat;
     background-size: cover;
 }
-.login-container {
+/* .login-container {
     width: 400px;
     margin: 100px auto;
     padding: 20px;
@@ -16,12 +16,17 @@
     background-color: #f9f9f9;
     text-align: center;
     height: 350px;
+} */
+.login-container {
+    width: 30%;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 40px #28a745bd;
+    background-color: #f9f9f9;
 }
 
-/* Tiêu đề */
 .login-container h2 {
-    margin-bottom: 20px;
-    color: #333;
+    margin: 22px 28px;
+    color: #005b0b;
 }
 
 /* Form */
@@ -34,14 +39,24 @@
 
 /* Input fields */
 .login-form input {
+    width: 90%;
+    margin: auto;
     padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 16px;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 1.05em;
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
-
+.login-form input:focus {
+    border-color: #28a745;
+    box-shadow: 0 0 5px rgba(40, 167, 69, 0.2);
+    outline: none;
+}
 /* Nút Submit */
 .login-form button {
+    width: 90%;
+    margin: auto;
     padding: 12px;
     background-color: #28a745;
     color: white;

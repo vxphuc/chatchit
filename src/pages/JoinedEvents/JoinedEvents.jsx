@@ -3,20 +3,21 @@ import "./JoinedEvents.css";
 import { getToken, getUserInfo } from "../../compoment/auth";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "../chatpage/ChatPage.css";
+import Sidebar from "../chatpage/silebar/Sidebar";
 
 export default function JoinedEvents() {
     const [events, setEvents] = useState([]);
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState("");
     
-    // 1. Thêm state mới để quản lý trạng thái "đã sao chép"
+    //Thêm state mới để quản lý trạng thái
     const [copiedCode, setCopiedCode] = useState('');
     const navigate = useNavigate();
     const token = getToken();
     const user = getUserInfo();
     const kol_id = user?._id;
 
-    // (useEffect không thay đổi)
     useEffect(() => {
         const fetchEvents = async () => {
             if (!kol_id) {
@@ -43,11 +44,10 @@ export default function JoinedEvents() {
         fetchEvents();
     }, [kol_id, token]);
 
-    // 2. Tạo hàm xử lý việc sao chép
+    //Tạo hàm xử lý việc sao chép
     const handleCopyCode = (code) => {
         navigator.clipboard.writeText(code).then(() => {
-            setCopiedCode(code); // Lưu mã vừa copy vào state
-            // Tự động xóa trạng thái "copied" sau 2 giây
+            setCopiedCode(code);
             setTimeout(() => {
                 setCopiedCode('');
             }, 2000);
@@ -55,12 +55,21 @@ export default function JoinedEvents() {
             console.error('Không thể sao chép:', err);
         });
     };
-
-    // (Phần render loading, message không thay đổi)
     if (loading) return <div className="joined-events-container"><p>Đang tải...</p></div>;
     if (message) return <div className="joined-events-container"><p className="message">{message}</p></div>;
 
+    const handleNewChatRedirect = () => {
+    navigate("/chat");
+  };
     return (
+    <div className="chat-page">
+          <Sidebar 
+            chats={[]}
+            activeChat={null}
+            setActiveChat={() => {}}
+            newChat={handleNewChatRedirect}
+          />
+        <div style={{ flex: 1, overflowY: "auto", backgroundColor: "#f5f5f5", position: "relative" }}>
         <div className="joined-events-container">
             <h2>🎟️ Các Sự Kiện Bạn Đã Tham Gia</h2>
             <table className="events-table">
@@ -100,5 +109,7 @@ export default function JoinedEvents() {
                 </button>
             </table>
         </div>
+    </div>
+    </div>
     );
 }

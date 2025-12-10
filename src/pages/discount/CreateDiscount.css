@@ -9,7 +9,7 @@
 
 .discount-table {
   width: 100%;
-  border-collapse: collapse; /* Gộp đường viền của các ô */
+  border-collapse: collapse;
   margin-top: 20px;
 }
 

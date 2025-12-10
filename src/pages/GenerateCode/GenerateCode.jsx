@@ -1,7 +1,13 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import "./GenerateCode.css"; // Sử dụng file CSS mới
-import { getUserInfo, getToken } from "../../compoment/auth";
+import "./GenerateCode.css"; 
+import { getUserInfo, getToken } from "../../compoment/auth"; // Giữ nguyên đường dẫn auth cũ của bạn
+import { useNavigate } from "react-router-dom";
+
+// --- IMPORT SIDEBAR VÀ CSS ---
+import "../chatpage/ChatPage.css"; 
+import Sidebar from "../chatpage/silebar/Sidebar";
+// -----------------------------
 
 export default function GenerateCode() {
   // State để lưu danh sách chiến dịch và chiến dịch đang được chọn
@@ -9,16 +15,18 @@ export default function GenerateCode() {
   const [selectedCampaign, setSelectedCampaign] = useState("");
 
   // State để quản lý trạng thái tải và gửi dữ liệu
-  const [loading, setLoading] = useState(true); // Trạng thái tải danh sách
-  const [submitting, setSubmitting] = useState(false); // Trạng thái khi bấm nút tạo
+  const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState("");
+
+  const navigate = useNavigate();
 
   // Lấy thông tin cần thiết
   const token = getToken();
   const user = getUserInfo();
   const kol_id = user?._id;
 
-  // useEffect để tải danh sách các chiến dịch khi component được render
+  // useEffect để tải danh sách các chiến dịch
   useEffect(() => {
     const fetchCampaigns = async () => {
       if (!token) {
@@ -47,7 +55,7 @@ export default function GenerateCode() {
 
   // Hàm xử lý khi form được gửi đi
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Ngăn trang tải lại
+    e.preventDefault(); 
 
     if (!selectedCampaign) {
       setMessage("⚠️ Vui lòng chọn một chiến dịch.");
@@ -67,7 +75,6 @@ export default function GenerateCode() {
         headers: { Authorization: `Bearer ${token}` },
       });
       
-      // Giả sử server trả về mã mới trong `res.data.new_code`
       setMessage(`✅ Tạo mã thành công! Mã mới của bạn là: ${res.data.new_code}`);
 
     } catch (err) {
@@ -79,36 +86,59 @@ export default function GenerateCode() {
     }
   };
 
-  if (loading) {
-    return <div className="generate-code-container"><p>Đang tải danh sách chiến dịch...</p></div>;
-  }
+  // Hàm chuyển hướng khi bấm tạo chat mới
+  const handleNewChatRedirect = () => {
+    navigate("/");
+  };
 
   return (
-    <div className="generate-code-container">
-      <form onSubmit={handleSubmit}>
-        <h2>✨ Tạo Mã Giảm Giá Mới</h2>
-        
-        <label htmlFor="campaign-select">Chọn chiến dịch tham gia:</label>
-        <select 
-          id="campaign-select"
-          value={selectedCampaign}
-          onChange={(e) => setSelectedCampaign(e.target.value)}
-          disabled={campaigns.length === 0}
-        >
-          <option value="">-- Vui lòng chọn --</option>
-          {campaigns.map((campaign) => (
-            <option key={campaign.id} value={campaign.id}>
-              {campaign.name}
-            </option>
-          ))}
-        </select>
-        
-        <button type="submit" disabled={submitting || !selectedCampaign}>
-          {submitting ? 'Đang tạo...' : '🚀 Tạo Mã'}
-        </button>
+    // Bọc toàn bộ trong class chat-page để chia cột
+    <div className="chat-page">
+      {/* Sidebar bên trái */}
+      <Sidebar 
+        chats={[]} 
+        activeChat={null}
+        setActiveChat={() => {}}
+        newChat={handleNewChatRedirect} 
+      />
 
-        {message && <p className="message">{message}</p>}
-      </form>
+      {/* Khu vực nội dung bên phải */}
+      <div style={{ flex: 1, overflowY: "auto", backgroundColor: "#f5f5f5", position: "relative" }}>
+        
+        {loading ? (
+          <div className="generate-code-container">
+            <p>Đang tải danh sách chiến dịch...</p>
+          </div>
+        ) : (
+          <div className="generate-code-container">
+            <form onSubmit={handleSubmit}>
+              <h2>✨ Tạo Mã Giảm Giá Mới</h2>
+              
+              <label htmlFor="campaign-select">Chọn chiến dịch tham gia:</label>
+              <select 
+                id="campaign-select"
+                value={selectedCampaign}
+                onChange={(e) => setSelectedCampaign(e.target.value)}
+                disabled={campaigns.length === 0}
+              >
+                <option value="">-- Vui lòng chọn --</option>
+                {campaigns.map((campaign) => (
+                  <option key={campaign.id} value={campaign.id}>
+                    {campaign.name}
+                  </option>
+                ))}
+              </select>
+              
+              <button type="submit" disabled={submitting || !selectedCampaign}>
+                {submitting ? 'Đang tạo...' : '🚀 Tạo Mã'}
+              </button>
+
+              {message && <p className="message">{message}</p>}
+            </form>
+          </div>
+        )}
+
+      </div>
     </div>
   );
 }

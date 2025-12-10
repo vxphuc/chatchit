@@ -3,6 +3,8 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { getToken, getUserInfo } from "../../compoment/auth";
 import "./DiscountDetails.css";
+import Sidebar from "../chatpage/silebar/Sidebar";
+import "../chatpage/ChatPage.css";
 
 export default function DiscountDetails() {
     const { id } = useParams();
@@ -14,7 +16,7 @@ export default function DiscountDetails() {
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState("");
 
-    // 2. Thêm State mới cho việc tạo mã
+    //Thêm State mới cho việc tạo mã
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitMessage, setSubmitMessage] = useState("");
 
@@ -38,7 +40,7 @@ export default function DiscountDetails() {
                 }
             } catch(err){
                 console.error("Lỗi khi lấy chi tiết sự kiện:", err);
-                setMessage("❌ Đã xảy ra lỗi khi tải dữ liệu."); // Cần set message lỗi ở đây
+                setMessage("❌ Đã xảy ra lỗi khi tải dữ liệu.");
             } finally{
                 setLoading(false);
             }
@@ -64,8 +66,6 @@ export default function DiscountDetails() {
             await axios.post("/api/them-moi-ma-giam-gia-theo-su-kien", payload, {
                 headers: { Authorization: `Bearer ${token}` },
             });
-            
-            // Dựa trên Postman, API trả về '1' khi thành công, không có mã cụ thể
             setSubmitMessage("✅ Tạo mã tham gia thành công!");
 
         } catch (err) {
@@ -88,7 +88,19 @@ export default function DiscountDetails() {
         return <div className="details-container"><p>Không có dữ liệu để hiển thị.</p></div>;
     }
 
+    const handleNewChatRedirect = () => {
+        navigate("/chat");
+    };
+
     return (
+        <div className="chat-page">
+              <Sidebar 
+                chats={[]}
+                activeChat={null}
+                setActiveChat={() => {}}
+                newChat={handleNewChatRedirect}
+              />
+              <div style={{ flex: 1, overflowY: "auto", backgroundColor: "#f5f5f5", position: "relative" }}>
         <div className="details-container">
           <div className="details-card">
             <h2>Chi Tiết Sự Kiện: {details.name}</h2>
@@ -115,6 +127,8 @@ export default function DiscountDetails() {
               ⬅️ Quay lại danh sách
             </button>
           </div>
+        </div>
+        </div>
         </div>
       );
 }
