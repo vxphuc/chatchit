@@ -105,7 +105,7 @@ export default function JoinedEvents() {
                     ))}
                 </tbody>
                 <button onClick={() => navigate(-1)} className="back-btn">
-                    ⬅️ Quay lại danh sách
+                    ⬅️ Quay lại
                 </button>
             </table>
         </div>

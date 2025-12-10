@@ -50,10 +50,8 @@
 
 /* 4. Thêm CSS mới cho nút copy */
 .code-cell {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 10px; /* Khoảng cách giữa mã và nút */
+  gap: 10px;
 }
 
 .copy-btn {
