@@ -20,19 +20,16 @@ const isHtmlResponse = (value = "") => {
 const getBotErrorMessage = (error) => {
   const serverMessage = error?.response?.data;
 
-  if (isHtmlResponse(serverMessage)) {
-    return "API chat chua duoc cau hinh dung tren moi truong deploy.";
-  }
 
   if (typeof serverMessage === "string" && serverMessage.trim()) {
     return serverMessage;
   }
 
   if (!error?.response && error?.request) {
-    return "Khong goi duoc API tu trinh duyet.";
+    return "Không goi đươc API từ trình duyệt.";
   }
 
-  return "Xin loi, chua lay duoc phan hoi tu chatbot.";
+  return "Xin lỗi, chưa lấy được phản hồi từ chatbot.";
 };
 
 export default function ChatPage() {
@@ -48,7 +45,7 @@ export default function ChatPage() {
       messages: [
         {
           role: "bot",
-          content: "Toi co the giup gi cho ban!",
+          content: "Tôi có thể giúp gì cho bạn!",
         },
       ],
     };
@@ -94,7 +91,7 @@ export default function ChatPage() {
         responseType: "text",
       });
 
-      let botReply = "Xin loi, khong nhan duoc phan hoi.";
+      let botReply = "Xin lỗi, không nhận được phản hồi.";
 
       if (typeof response.data === "string" && response.data.trim()) {
         botReply = response.data.replace(/^"(.*)"$/s, "$1");
