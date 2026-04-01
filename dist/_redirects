@@ -1,2 +1,2 @@
-/api/*   https://chatapi.io.vn/:splat   200
-/*    /index.html   200
+/chat-api/*   https://staging.chatapi.io.vn/:splat   200
+/*   /index.html   200
