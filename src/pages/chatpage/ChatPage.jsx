@@ -1,68 +1,126 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import Sidebar from "./silebar/Sidebar";
 import ChatWindow from "./chatwindow/ChatWindow";
 import "./ChatPage.css";
-import axios from "axios";
+
+const CHAT_API_URL =
+  import.meta.env.VITE_CHAT_API_URL || "/chat-api/chat-gpt";
+
+const getBotErrorMessage = (error) => {
+  const serverMessage = error?.response?.data;
+
+  if (typeof serverMessage === "string" && serverMessage.trim()) {
+    return serverMessage;
+  }
+
+  if (!error?.response && error?.request) {
+    return "Khong goi duoc API tu trinh duyet. Hay kiem tra CORS hoac proxy /chat-api.";
+  }
+
+  return "Xin loi, chua lay duoc phan hoi tu chatbot.";
+};
 
 export default function ChatPage() {
   const [chats, setChats] = useState([]);
   const [activeChat, setActiveChat] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const newChat = () => {
     const chatId = Date.now();
-    setChats([...chats, { id: chatId, title: "Cuộc trò chuyện mới", messages: [{ role: "bot", content: "Xin chào! Tôi có thể giúp gì cho bạn?" }] }]);
+    const newConversation = {
+      id: chatId,
+      title: "Cuoc tro chuyen moi",
+      messages: [
+        {
+          role: "bot",
+          content: "Toi co the giup gi cho ban!",
+        },
+      ],
+    };
+
+    setChats((prev) => [...prev, newConversation]);
     setActiveChat(chatId);
   };
-  // Tạo cuộc trò chuyện mới khi trang được tải lần đầu
+
   useEffect(() => {
     if (chats.length === 0) {
       newChat();
     }
   }, []);
-  const sendMessage = async (input) => {
-    if (!input || activeChat === null) return;
 
-    // Thêm tin nhắn người dùng
+  const sendMessage = async (input) => {
+    if (!input?.trim() || activeChat === null || loading) return;
+
+    const currentChatId = activeChat;
+    const userMessage = {
+      role: "user",
+      content: input,
+    };
+
+    setLoading(true);
     setChats((prev) =>
       prev.map((chat) =>
-        chat.id === activeChat
-          ? { ...chat, messages: [...chat.messages, { role: "user", content: input }] }
+        chat.id === currentChatId
+          ? {
+              ...chat,
+              messages: [...chat.messages, userMessage],
+            }
           : chat
       )
     );
 
     try {
-      const token = localStorage.getItem("tokenjwt");
-      console.log("Token JWT:", token);
-      // Gửi request tới API backend
-      const res = await axios.post("/api/chatAI", 
-        { Input: input },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const response = await axios({
+        method: "post",
+        url: CHAT_API_URL,
+        params: {
+          text: input,
         },
+        responseType: "text",
+      });
+
+      let botReply = "Xin loi, khong nhan duoc phan hoi.";
+
+      if (typeof response.data === "string" && response.data.trim()) {
+        botReply = response.data.replace(/^"(.*)"$/s, "$1");
       }
-    );
 
-      const botReply = res.data?.response || "Xin lỗi, không nhận được phản hồi.";
+      const botMessage = {
+        role: "bot",
+        content: botReply,
+      };
 
-      // Thêm phản hồi từ bot
       setChats((prev) =>
         prev.map((chat) =>
-          chat.id === activeChat
-            ? { ...chat, messages: [...chat.messages, { role: "bot", content: botReply }] }
+          chat.id === currentChatId
+            ? {
+                ...chat,
+                messages: [...chat.messages, botMessage],
+              }
             : chat
         )
       );
     } catch (error) {
-      console.error("Lỗi khi gọi API:", error);
+      console.error("Loi khi goi API:", error);
+
+      const botMessage = {
+        role: "bot",
+        content: getBotErrorMessage(error),
+      };
+
       setChats((prev) =>
         prev.map((chat) =>
-          chat.id === activeChat
-            ? { ...chat, messages: [...chat.messages, { role: "bot", content: "Có lỗi khi gọi API." }] }
+          chat.id === currentChatId
+            ? {
+                ...chat,
+                messages: [...chat.messages, botMessage],
+              }
             : chat
         )
       );
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -76,7 +134,12 @@ export default function ChatPage() {
         setActiveChat={setActiveChat}
         newChat={newChat}
       />
-      <ChatWindow currentChat={currentChat} sendMessage={sendMessage} />
+
+      <ChatWindow
+        currentChat={currentChat}
+        sendMessage={sendMessage}
+        loading={loading}
+      />
     </div>
   );
 }

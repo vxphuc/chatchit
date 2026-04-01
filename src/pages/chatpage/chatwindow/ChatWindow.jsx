@@ -1,6 +1,12 @@
 import { useState } from "react";
 import "./ChatWindow.css";
 
+const formatMessageContent = (content = "") =>
+  String(content)
+    .replace(/\\r\\n/g, "\n")
+    .replace(/\\n/g, "\n")
+    .replace(/\*\*/g, "\n");
+
 export default function ChatWindow({ currentChat, sendMessage, startNewChat }) {
   const [input, setInput] = useState("");
   const [newChatName, setNewChatName] = useState("");
@@ -56,7 +62,7 @@ export default function ChatWindow({ currentChat, sendMessage, startNewChat }) {
                   whiteSpace: "pre-line",
                 }}
               >
-                {msg.content.replace(/\*\*/g, "\n")}
+                {formatMessageContent(msg.content)}
               </p>
             </div>
           ))
