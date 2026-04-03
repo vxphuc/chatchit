@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Sidebar from "./silebar/Sidebar";
 import ChatWindow from "./chatwindow/ChatWindow";
@@ -36,12 +36,13 @@ export default function ChatPage() {
   const [chats, setChats] = useState([]);
   const [activeChat, setActiveChat] = useState(null);
   const [loading, setLoading] = useState(false);
+  const hasInitializedChat = useRef(false);
 
   const newChat = () => {
     const chatId = Date.now();
     const newConversation = {
       id: chatId,
-      title: "Cuoc tro chuyen moi",
+      title: "Cuộc trò chuyện mới",
       messages: [
         {
           role: "bot",
@@ -55,9 +56,10 @@ export default function ChatPage() {
   };
 
   useEffect(() => {
-    if (chats.length === 0) {
-      newChat();
-    }
+    if (hasInitializedChat.current) return;
+
+    hasInitializedChat.current = true;
+    newChat();
   }, []);
 
   const sendMessage = async (input) => {

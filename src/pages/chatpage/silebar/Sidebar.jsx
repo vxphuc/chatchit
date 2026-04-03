@@ -22,7 +22,7 @@ export default function Sidebar({ chats, activeChat, setActiveChat, newChat }) {
       </div>
       
       {/* Góc dưới sidebar: chỉnh sửa thông tin cá nhân */}
-      <div className="user-settings">
+      {/* <div className="user-settings">
         <button
           className="user-settings-btn"
           onClick={() => (window.location.href = "/salary-koc")}
@@ -53,7 +53,7 @@ export default function Sidebar({ chats, activeChat, setActiveChat, newChat }) {
         >
           ✨ danh sách mã giảm giá
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }
